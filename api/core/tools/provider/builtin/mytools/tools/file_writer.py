@@ -20,12 +20,9 @@ class FileWriterTool(BuiltinTool):
         try:
             # コンテンツタイプに応じた処理
             if content_type == ContentType.BINARY:
-                try:
-                    # Base64デコード
-                    binary_content = base64.b64decode(content)
-                    mime_type = "application/octet-stream"
-                except base64.binascii.Error:
-                    return [self.create_text_message("Invalid base64 encoded binary content")]
+                # バイナリデータをそのまま使用
+                binary_content = content
+                mime_type = "application/octet-stream"
             else:
                 # テキストコンテンツ
                 binary_content = content.encode('utf-8')
@@ -71,8 +68,8 @@ class FileWriterTool(BuiltinTool):
                     ToolParameterOption(
                         value=ContentType.BINARY,
                         label=I18nObject(
-                            en_US="Binary (Base64)",
-                            ja_JP="バイナリ（Base64）"
+                            en_US="Binary",
+                            ja_JP="バイナリ"
                         )
                     )
                 ],
@@ -90,8 +87,8 @@ class FileWriterTool(BuiltinTool):
                     ja_JP="内容"
                 ),
                 human_description=I18nObject(
-                    en_US="The content to write to the file. For binary data, provide base64 encoded string",
-                    ja_JP="ファイルに書き込む内容。バイナリデータの場合は、Base64エンコードされた文字列を指定してください"
+                    en_US="The content to write to the file.",
+                    ja_JP="ファイルに書き込む内容。"
                 ),
                 type=ToolParameter.ToolParameterType.STRING,
                 form=ToolParameter.ToolParameterForm.FORM,
