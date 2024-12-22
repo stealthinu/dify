@@ -1,5 +1,4 @@
 import base64
-import os
 from typing import Any
 from enum import Enum
 
@@ -16,12 +15,7 @@ class ContentType(str, Enum):
 class FileWriterTool(BuiltinTool):
     def _invoke(self, user_id: str, tool_parameters: dict[str, Any]) -> list[ToolInvokeMessage]:
         content = tool_parameters.get("content")
-        filename = tool_parameters.get("filename")
         content_type = tool_parameters.get("content_type", ContentType.TEXT)
-        
-        # ファイル名のバリデーション
-        if not filename or not isinstance(filename, str):
-            return [self.create_text_message("Invalid filename")]
         
         try:
             # コンテンツタイプに応じた処理
@@ -39,10 +33,10 @@ class FileWriterTool(BuiltinTool):
             
             # Difyシステムにファイルを返す
             return [
-                self.create_text_message(f"Successfully prepared content for {filename}"),
+                self.create_text_message("Successfully prepared content"),
                 self.create_blob_message(
                     blob=binary_content,
-                    meta={"mime_type": mime_type, "filename": filename},
+                    meta={"mime_type": mime_type},
                     save_as=self.VariableKey.CUSTOM.value,
                 ),
             ]
@@ -98,24 +92,6 @@ class FileWriterTool(BuiltinTool):
                 human_description=I18nObject(
                     en_US="The content to write to the file. For binary data, provide base64 encoded string",
                     ja_JP="ファイルに書き込む内容。バイナリデータの場合は、Base64エンコードされた文字列を指定してください"
-                ),
-                type=ToolParameter.ToolParameterType.STRING,
-                form=ToolParameter.ToolParameterForm.FORM,
-                required=True
-            )
-        )
-        
-        # ファイル名パラメータ
-        parameters.append(
-            ToolParameter(
-                name="filename",
-                label=I18nObject(
-                    en_US="Filename",
-                    ja_JP="ファイル名"
-                ),
-                human_description=I18nObject(
-                    en_US="The name of the file to create",
-                    ja_JP="作成するファイルの名前"
                 ),
                 type=ToolParameter.ToolParameterType.STRING,
                 form=ToolParameter.ToolParameterForm.FORM,
