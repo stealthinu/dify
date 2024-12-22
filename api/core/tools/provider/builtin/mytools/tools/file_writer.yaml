@@ -7,3 +7,15 @@ description:
   human:
     en_US: Write content to a file.
   llm: Write content to a file.
+parameters:
+  - name: content
+    type: string
+    required: true
+    label:
+      en_US: Content
+      ja_JP: 内容
+    human_description:
+      en_US: The content to write to the file.
+      ja_JP: ファイルに書き込む内容。
+    llm_description: The content to write to the file.
+    form: llm
