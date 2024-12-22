@@ -22,36 +22,33 @@ class FileWriterTool(BuiltinTool):
         # ファイル名のバリデーション
         if not filename or not isinstance(filename, str):
             return [self.create_text_message("Invalid filename")]
-            
-        # 安全なファイルパスの作成（ディレクトリトラバーサル対策）
-        safe_filename = os.path.basename(filename)
         
         try:
-            # 出力ディレクトリの作成（存在しない場合）
-            output_dir = "output"
-            os.makedirs(output_dir, exist_ok=True)
-            
-            # ファイルパスの生成
-            file_path = os.path.join(output_dir, safe_filename)
-            
-            # コンテンツタイプに応じた書き込み処理
+            # コンテンツタイプに応じた処理
             if content_type == ContentType.BINARY:
                 try:
                     # Base64デコード
                     binary_content = base64.b64decode(content)
-                    with open(file_path, 'wb') as f:
-                        f.write(binary_content)
+                    mime_type = "application/octet-stream"
                 except base64.binascii.Error:
                     return [self.create_text_message("Invalid base64 encoded binary content")]
             else:
-                # テキストとして書き込み
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(content)
+                # テキストコンテンツ
+                binary_content = content.encode('utf-8')
+                mime_type = "text/plain"
             
-            return [self.create_text_message(f"Successfully wrote content to {safe_filename}")]
+            # Difyシステムにファイルを返す
+            return [
+                self.create_text_message(f"Successfully prepared content for {filename}"),
+                self.create_blob_message(
+                    blob=binary_content,
+                    meta={"mime_type": mime_type, "filename": filename},
+                    save_as=self.VariableKey.CUSTOM.value,
+                ),
+            ]
             
         except Exception as e:
-            return [self.create_text_message(f"Failed to write file: {str(e)}")]
+            return [self.create_text_message(f"Failed to process file: {str(e)}")]
 
     def get_runtime_parameters(self) -> list[ToolParameter]:
         parameters = []
