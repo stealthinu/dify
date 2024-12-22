@@ -1,10 +1,8 @@
-import io
-import os
 import base64
+import os
 from typing import Any
 from enum import Enum
 
-from core.file.enums import FileType
 from core.tools.entities.common_entities import I18nObject
 from core.tools.entities.tool_entities import ToolInvokeMessage, ToolParameter, ToolParameterOption
 from core.tools.tool.builtin_tool import BuiltinTool
@@ -64,12 +62,10 @@ class FileWriterTool(BuiltinTool):
                 name="content_type",
                 label=I18nObject(
                     en_US="Content Type",
-                    zh_Hans="内容类型",
                     ja_JP="コンテンツタイプ"
                 ),
                 human_description=I18nObject(
                     en_US="Type of the content (text or binary)",
-                    zh_Hans="内容的类型（文本或二进制）",
                     ja_JP="コンテンツの種類（テキストまたはバイナリ）"
                 ),
                 type=ToolParameter.ToolParameterType.SELECT,
@@ -78,7 +74,6 @@ class FileWriterTool(BuiltinTool):
                         value=ContentType.TEXT,
                         label=I18nObject(
                             en_US="Text",
-                            zh_Hans="文本",
                             ja_JP="テキスト"
                         )
                     ),
@@ -86,7 +81,6 @@ class FileWriterTool(BuiltinTool):
                         value=ContentType.BINARY,
                         label=I18nObject(
                             en_US="Binary (Base64)",
-                            zh_Hans="二进制（Base64）",
                             ja_JP="バイナリ（Base64）"
                         )
                     )
@@ -102,12 +96,10 @@ class FileWriterTool(BuiltinTool):
                 name="content",
                 label=I18nObject(
                     en_US="Content",
-                    zh_Hans="内容",
                     ja_JP="内容"
                 ),
                 human_description=I18nObject(
                     en_US="The content to write to the file. For binary data, provide base64 encoded string",
-                    zh_Hans="要写入文件的内容。对于二进制数据，请提供base64编码的字符串",
                     ja_JP="ファイルに書き込む内容。バイナリデータの場合は、Base64エンコードされた文字列を指定してください"
                 ),
                 type=ToolParameter.ToolParameterType.STRING,
@@ -122,12 +114,10 @@ class FileWriterTool(BuiltinTool):
                 name="filename",
                 label=I18nObject(
                     en_US="Filename",
-                    zh_Hans="文件名",
                     ja_JP="ファイル名"
                 ),
                 human_description=I18nObject(
                     en_US="The name of the file to create",
-                    zh_Hans="要创建的文件名",
                     ja_JP="作成するファイルの名前"
                 ),
                 type=ToolParameter.ToolParameterType.STRING,
@@ -137,4 +127,3 @@ class FileWriterTool(BuiltinTool):
         )
         
         return parameters
-

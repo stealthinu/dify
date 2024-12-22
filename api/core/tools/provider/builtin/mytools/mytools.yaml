@@ -1,0 +1,10 @@
+identity:
+  author: stealthinu
+  name: mytools
+  label:
+    en_US: My Tools
+  description:
+    en_US: My Tools
+  icon: icon.svg
+  tags:
+    - utilities

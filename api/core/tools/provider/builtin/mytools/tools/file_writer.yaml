@@ -1,0 +1,9 @@
+identity:
+  name: file_writer
+  author: stealthinu
+  label:
+    en_US: File Writer
+description:
+  human:
+    en_US: Write content to a file.
+  llm: Write content to a file.

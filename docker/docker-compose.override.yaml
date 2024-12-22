@@ -1,0 +1,28 @@
+services:
+  api:
+    image: dify-api:latest 
+
+  worker:
+    image: dify-api:latest
+
+  # ffmpeg-api service
+  ffmpeg-api:
+    image: ffmpeg-api:latest
+    restart: always
+    networks:
+      - default
+
+  aivisspeech-engine:
+    image: ghcr.io/aivis-project/aivisspeech-engine:nvidia-latest
+    restart: always
+    ports:
+      - "10101:10101"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - ~/.local/share/AivisSpeech-Engine:/home/user/.local/share/AivisSpeech-Engine-Dev
