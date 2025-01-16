@@ -1,0 +1,29 @@
+identity:
+  author: stealthinu
+  name: gworks
+  label:
+    en_US: gworks tools
+  description:
+    en_US: gworks tools
+  icon: icon.svg
+  tags:
+    - utilities
+
+tools:
+  - name: file_writer
+    label:
+      en_US: File Writer
+      ja_JP: ファイル書き込み
+    description:
+      en_US: Write text content to a file with specified format
+      ja_JP: 指定された形式でテキストファイルにコンテンツを書き込む
+    tool_type: file_writer
+
+  - name: file_uploader
+    label:
+      en_US: File Uploader
+      ja_JP: ファイルアップローダー
+    description:
+      en_US: Upload and process binary files (audio, video, etc.)
+      ja_JP: バイナリファイル（音声、動画など）をアップロードして処理
+    tool_type: file_uploader

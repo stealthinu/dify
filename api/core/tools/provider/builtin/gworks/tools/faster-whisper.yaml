@@ -1,0 +1,21 @@
+identity:
+  name: faster-whisper
+  author: stealthinu
+  label:
+    en_US: Faster Whisper
+description:
+  human:
+    en_US: Faster Whisper
+  llm: Faster Whisper
+parameters:
+  - name: audio_path
+    type: string
+    required: true
+    label:
+      en_US: Audio Path
+      ja_JP: 音声パス
+    human_description:
+      en_US: The path to the audio file.
+      ja_JP: 音声ファイルのパス。
+    llm_description: The path to the audio file.
+    form: llm

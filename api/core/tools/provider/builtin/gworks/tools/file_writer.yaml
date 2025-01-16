@@ -1,0 +1,21 @@
+identity:
+  name: file_writer
+  author: stealthinu
+  label:
+    en_US: File Writer
+description:
+  human:
+    en_US: Write content to a file.
+  llm: Write content to a file.
+parameters:
+  - name: content
+    type: binary
+    required: true
+    label:
+      en_US: Content
+      ja_JP: 内容
+    human_description:
+      en_US: The content to write to the file (text or binary data).
+      ja_JP: ファイルに書き込む内容（テキストまたはバイナリデータ）。
+    llm_description: The content to write to the file (text or binary data).
+    form: llm
