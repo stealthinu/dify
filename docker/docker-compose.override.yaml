@@ -43,3 +43,6 @@ services:
     ports:
       - "8000:8000"
     restart: unless-stopped
+
+volumes:
+  hugging_face_cache:
