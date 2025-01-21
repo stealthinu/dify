@@ -1,0 +1,66 @@
+services:
+  api:
+    volumes:
+#      - ../api:/app/api
+      - ../api/core/tools/provider/builtin:/app/api/core/tools/provider/builtin
+      - ./volumes/app/storage:/app/api/storage
+#    environment:
+#      FLASK_DEBUG: 'true'
+#      DEBUG: 'true'
+
+#  api:
+#    image: dify-api:latest 
+#
+#  worker:
+#    image: dify-api:latest
+
+  db:
+    ports:
+      - '${DB_PORT:-5432}:${DB_PORT:-5432}'
+
+  # Simple File Server
+
+  # ffmpeg-api service
+  ffmpeg-api:
+    image: ffmpeg-api:latest
+    restart: always
+    networks:
+      - default
+
+  # AivisSpeech-Engine service
+  aivisspeech-engine:
+    image: ghcr.io/aivis-project/aivisspeech-engine:nvidia-latest
+    restart: always
+    ports:
+      - "10101:10101"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - ~/.local/share/AivisSpeech-Engine:/home/user/.local/share/AivisSpeech-Engine-Dev
+
+  # Faster Whisper
+  faster-whisper-server:
+    image: fedirz/faster-whisper-server:latest-cuda
+    container_name: faster-whisper-server
+    environment:
+      - WHISPER__MODEL=Systran/faster-whisper-large-v3
+    volumes:
+      - hugging_face_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: ["gpu"]
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  # AI Tuber Kit
+
+volumes:
+  hugging_face_cache:
