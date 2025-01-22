@@ -1,7 +1,7 @@
-from typing import Any, Union
+from typing import Any
 
 from core.tools.entities.common_entities import I18nObject
-from core.tools.entities.tool_entities import ToolInvokeMessage, ToolParameter
+from core.tools.entities.tool_entities import ToolInvokeMessage, ToolParameter, ToolParameterOption
 from core.tools.tool.builtin_tool import BuiltinTool
 
 
@@ -47,10 +47,7 @@ class FileWriterTool(BuiltinTool):
             return [self.create_text_message(f"Failed to process file: {str(e)}")]
 
     def get_runtime_parameters(self) -> list[ToolParameter]:
-        parameters = []
-
-        # コンテンツパラメータ
-        parameters.append(
+        return [
             ToolParameter(
                 name="content",
                 label=I18nObject(
@@ -64,11 +61,7 @@ class FileWriterTool(BuiltinTool):
                 type="string",
                 form=ToolParameter.ToolParameterForm.LLM,
                 required=True
-            )
-        )
-
-        # ファイル形式パラメータ
-        parameters.append(
+            ),
             ToolParameter(
                 name="file_type",
                 label=I18nObject(
@@ -76,19 +69,19 @@ class FileWriterTool(BuiltinTool):
                     ja_JP="ファイル形式"
                 ),
                 human_description=I18nObject(
-                    en_US="The type of file to create (text, json, markdown).",
-                    ja_JP="作成するファイルの形式（text, json, markdown）。"
+                    en_US="The type of file to create.",
+                    ja_JP="作成するファイルの形式。"
                 ),
-                type="string",
+                type="select",
                 form=ToolParameter.ToolParameterForm.LLM,
                 required=True,
-                options=["text", "json", "markdown"],
+                options=[
+                    ToolParameterOption(value="text", label=I18nObject(en_US="Text", ja_JP="テキスト")),
+                    ToolParameterOption(value="json", label=I18nObject(en_US="JSON", ja_JP="JSON")),
+                    ToolParameterOption(value="markdown", label=I18nObject(en_US="Markdown", ja_JP="Markdown"))
+                ],
                 default="text"
-            )
-        )
-
-        # ファイル名パラメータ
-        parameters.append(
+            ),
             ToolParameter(
                 name="file_name",
                 label=I18nObject(
@@ -103,6 +96,4 @@ class FileWriterTool(BuiltinTool):
                 form=ToolParameter.ToolParameterForm.LLM,
                 required=True
             )
-        )
-
-        return parameters
+        ]

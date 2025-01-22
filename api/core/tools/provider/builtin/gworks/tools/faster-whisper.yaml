@@ -3,19 +3,96 @@ identity:
   author: stealthinu
   label:
     en_US: Faster Whisper
+    ja_JP: 高速音声文字起こし
 description:
   human:
-    en_US: Faster Whisper
-  llm: Faster Whisper
+    en_US: Transcribe or translate audio files using Faster Whisper
+    ja_JP: Faster Whisperを使用して音声ファイルの文字起こしまたは翻訳を行います
+  llm: Transcribe or translate audio files using Faster Whisper
 parameters:
-  - name: audio_path
-    type: string
+  - name: audio_file
+    type: file
     required: true
     label:
-      en_US: Audio Path
-      ja_JP: 音声パス
+      en_US: Audio File
+      ja_JP: オーディオファイル
     human_description:
-      en_US: The path to the audio file.
-      ja_JP: 音声ファイルのパス。
-    llm_description: The path to the audio file.
+      en_US: The audio file to be transcribed.
+      ja_JP: 文字起こし対象のオーディオファイル。
+    llm_description: The audio file to be transcribed.
+    form: form
+  - name: task
+    type: select
+    required: false
+    label:
+      en_US: Task
+      ja_JP: タスク
+    human_description:
+      en_US: Choose between transcription or translation
+      ja_JP: 文字起こしか翻訳かを選択
+    options:
+      - value: transcribe
+        label:
+          en_US: Transcribe
+          ja_JP: 文字起こし
+      - value: translate
+        label:
+          en_US: Translate
+          ja_JP: 翻訳
+    default: transcribe
+    form: llm
+  - name: language
+    type: string
+    required: false
+    label:
+      en_US: Language
+      ja_JP: 言語
+    human_description:
+      en_US: Language of the audio file
+      ja_JP: 音声ファイルの言語
+    default: en
+    form: llm
+  - name: chunk_level
+    type: select
+    required: false
+    label:
+      en_US: Chunk Level
+      ja_JP: チャンクレベル
+    human_description:
+      en_US: Choose between segment or word level processing
+      ja_JP: セグメント単位か単語単位かを選択
+    options:
+      - value: segment
+        label:
+          en_US: Segment
+          ja_JP: セグメント
+      - value: word
+        label:
+          en_US: Word
+          ja_JP: 単語
+    default: segment
+    form: llm
+  - name: version
+    type: select
+    required: false
+    label:
+      en_US: Model Version
+      ja_JP: モデルバージョン
+    human_description:
+      en_US: Choose the Whisper model version
+      ja_JP: Whisperモデルのバージョンを選択
+    options:
+      - value: "1"
+        label:
+          en_US: Version 1
+          ja_JP: バージョン1
+      - value: "2"
+        label:
+          en_US: Version 2
+          ja_JP: バージョン2
+      - value: "3"
+        label:
+          en_US: Version 3
+          ja_JP: バージョン3
+    default: "3"
     form: llm

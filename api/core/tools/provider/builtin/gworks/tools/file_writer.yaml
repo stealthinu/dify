@@ -3,19 +3,55 @@ identity:
   author: stealthinu
   label:
     en_US: File Writer
+    ja_JP: ファイル作成
 description:
   human:
     en_US: Write content to a file.
+    ja_JP: ファイルにコンテンツを書き込みます。
   llm: Write content to a file.
 parameters:
   - name: content
-    type: binary
+    type: string
     required: true
     label:
       en_US: Content
       ja_JP: 内容
     human_description:
-      en_US: The content to write to the file (text or binary data).
-      ja_JP: ファイルに書き込む内容（テキストまたはバイナリデータ）。
-    llm_description: The content to write to the file (text or binary data).
+      en_US: The content to write to the file.
+      ja_JP: ファイルに書き込む内容。
+    llm_description: The content to write to the file.
+    form: llm
+  - name: file_type
+    type: select
+    required: true
+    label:
+      en_US: File Type
+      ja_JP: ファイル形式
+    human_description:
+      en_US: The type of file to create.
+      ja_JP: 作成するファイルの形式。
+    options:
+      - value: text
+        label:
+          en_US: Text
+          ja_JP: テキスト
+      - value: json
+        label:
+          en_US: JSON
+          ja_JP: JSON
+      - value: markdown
+        label:
+          en_US: Markdown
+          ja_JP: Markdown
+    default: text
+    form: llm
+  - name: file_name
+    type: string
+    required: true
+    label:
+      en_US: File Name
+      ja_JP: ファイル名
+    human_description:
+      en_US: The name of the file (without extension).
+      ja_JP: ファイル名（拡張子なし）。
     form: llm

@@ -3,7 +3,7 @@ import requests
 import io
 
 from core.tools.entities.common_entities import I18nObject
-from core.tools.entities.tool_entities import ToolInvokeMessage, ToolParameter
+from core.tools.entities.tool_entities import ToolInvokeMessage, ToolParameter, ToolParameterOption
 from core.tools.tool.builtin_tool import BuiltinTool
 from core.file.enums import FileType, FileAttribute
 from core.file.file_manager import download, get_attr
@@ -44,40 +44,57 @@ class FasterWhisperTool(BuiltinTool):
                 name="audio_file",
                 label=I18nObject(en_US="Audio File", ja_JP="オーディオファイル"),
                 human_description=I18nObject(en_US="The audio file to be transcribed.", ja_JP="文字起こし対象のオーディオファイル。"),
-                type=ToolParameter.ToolParameterType.FILE,
-                form=ToolParameter.ToolParameterForm.UPLOAD,
+                type="file",
+                form=ToolParameter.ToolParameterForm.FORM,
                 required=True
             ),
             ToolParameter(
                 name="task",
                 label=I18nObject(en_US="Task", ja_JP="タスク"),
                 human_description=I18nObject(en_US="Transcribe or translate", ja_JP="書き起こしか翻訳かを指定。"),
-                type=ToolParameter.ToolParameterType.STRING,
-                form=ToolParameter.ToolParameterForm.INPUT,
-                required=False
+                type="select",
+                form=ToolParameter.ToolParameterForm.LLM,
+                required=False,
+                options=[
+                    ToolParameterOption(value="transcribe", label=I18nObject(en_US="Transcribe", ja_JP="文字起こし")),
+                    ToolParameterOption(value="translate", label=I18nObject(en_US="Translate", ja_JP="翻訳"))
+                ],
+                default="transcribe"
             ),
             ToolParameter(
                 name="language",
                 label=I18nObject(en_US="Language", ja_JP="言語"),
                 human_description=I18nObject(en_US="Language of the audio file.", ja_JP="オーディオファイルの言語。"),
-                type=ToolParameter.ToolParameterType.STRING,
-                form=ToolParameter.ToolParameterForm.INPUT,
-                required=False
+                type="string",
+                form=ToolParameter.ToolParameterForm.LLM,
+                required=False,
+                default="en"
             ),
             ToolParameter(
                 name="chunk_level",
                 label=I18nObject(en_US="Chunk Level", ja_JP="チャンクレベル"),
                 human_description=I18nObject(en_US="Segment or word level.", ja_JP="セグメント単位か単語単位か。"),
-                type=ToolParameter.ToolParameterType.STRING,
-                form=ToolParameter.ToolParameterForm.INPUT,
-                required=False
+                type="select",
+                form=ToolParameter.ToolParameterForm.LLM,
+                required=False,
+                options=[
+                    ToolParameterOption(value="segment", label=I18nObject(en_US="Segment", ja_JP="セグメント")),
+                    ToolParameterOption(value="word", label=I18nObject(en_US="Word", ja_JP="単語"))
+                ],
+                default="segment"
             ),
             ToolParameter(
                 name="version",
                 label=I18nObject(en_US="Model Version", ja_JP="モデルバージョン"),
                 human_description=I18nObject(en_US="Which Whisper version to use.", ja_JP="使用するWhisperバージョン。"),
-                type=ToolParameter.ToolParameterType.STRING,
-                form=ToolParameter.ToolParameterForm.INPUT,
-                required=False
+                type="select",
+                form=ToolParameter.ToolParameterForm.LLM,
+                required=False,
+                options=[
+                    ToolParameterOption(value="1", label=I18nObject(en_US="Version 1", ja_JP="バージョン1")),
+                    ToolParameterOption(value="2", label=I18nObject(en_US="Version 2", ja_JP="バージョン2")),
+                    ToolParameterOption(value="3", label=I18nObject(en_US="Version 3", ja_JP="バージョン3"))
+                ],
+                default="3"
             )
         ]
