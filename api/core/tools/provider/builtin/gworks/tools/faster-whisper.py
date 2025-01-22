@@ -15,7 +15,8 @@ class FasterWhisperTool(BuiltinTool):
             return [self.create_text_message("Not a valid audio file.")]
 
         # デフォルトモデルの指定
-        model = "Systran/faster-distil-whisper-large-v3"
+        #model = "Systran/faster-distil-whisper-large-v3"
+        model = "Systran/faster-whisper-large-v3"
         language = tool_parameters.get("language", "en")
 
         audio_binary = io.BytesIO(download(audio_file))
@@ -28,8 +29,12 @@ class FasterWhisperTool(BuiltinTool):
                 "model": model,
                 "task": "transcribe",  # 固定値
                 "language": language,
-                "chunk_level": "segment",  # 固定値
-                "timestamp_granularities": ["segment"]  # 固定値
+                "response_format": "verbose_json",
+                "timestamp_granularities": ["segment"],
+                "prompt": "",
+                "hotwords": "",
+                "temperature": 0.0,
+                "stream": False,
             }
             response = requests.post(
                 "http://faster-whisper-server:8000/v1/audio/transcriptions",
