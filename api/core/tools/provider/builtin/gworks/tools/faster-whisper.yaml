@@ -17,22 +17,99 @@ parameters:
     required: true
     label:
       en_US: Audio File
-      ja_JP: オーディオファイル
+      ja_JP: 音声ファイル
     human_description:
       en_US: The audio file to be transcribed.
-      ja_JP: 文字起こし対象のオーディオファイル。
+      ja_JP: 文字起こし対象の音声ファイル
     llm_description: The audio file to be transcribed.
     form: llm
 
   - name: language
-    type: string
+    type: select
     required: false
     label:
       en_US: Language
       ja_JP: 言語
     human_description:
-      en_US: Language of the audio file (e.g., en, ja, fr).
-      ja_JP: オーディオファイルの言語（例：en, ja, fr）。
-    llm_description: Language code of the audio file.
-    form: llm
+      en_US: Language of the audio file.
+      ja_JP: 音声ファイルの言語
+    options:
+      - value: en
+        label:
+          en_US: English
+          ja_JP: 英語
+      - value: ja
+        label:
+          en_US: Japanese
+          ja_JP: 日本語
+      - value: fr
+        label:
+          en_US: French
+          ja_JP: フランス語
+      - value: de
+        label:
+          en_US: German
+          ja_JP: ドイツ語
+      - value: es
+        label:
+          en_US: Spanish
+          ja_JP: スペイン語
+      - value: zh
+        label:
+          en_US: Chinese
+          ja_JP: 中国語
+      - value: ko
+        label:
+          en_US: Korean
+          ja_JP: 韓国語
     default: en
+    form: form
+
+  - name: response_format
+    type: select
+    required: false
+    label:
+      en_US: Response Format
+      ja_JP: レスポース形式
+    human_description:
+      en_US: Format of the response.
+      ja_JP: レスポンスの形式
+    options:
+      - value: text
+        label:
+          en_US: Text
+          ja_JP: テキスト
+      - value: json
+        label:
+          en_US: JSON
+          ja_JP: JSON
+      - value: verbose_json
+        label:
+          en_US: Verbose JSON
+          ja_JP: 詳細JSON
+    default: verbose_json
+    form: form
+
+  - name: model
+    type: string
+    required: false
+    label:
+      en_US: Model
+      ja_JP: モデル
+    human_description:
+      en_US: Model to use
+      ja_JP: 使用するモデル
+    default: Systran/faster-distil-whisper-large-v3
+    form: form
+
+  - name: endpoint
+    type: string
+    required: false
+    label:
+      en_US: API Endpoint
+      ja_JP: APIエンドポイント
+    human_description:
+      en_US: API endpoint URL
+      ja_JP: APIエンドポイントURL
+    default: http://faster-whisper-server:8000
+    form: form
