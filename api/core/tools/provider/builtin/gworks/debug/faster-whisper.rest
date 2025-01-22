@@ -37,3 +37,15 @@ Content-Type: application/json
     "user": "{{user}}"
 }
 
+### LLMテスト
+@api-key2=app-WrZ1xrmB2RuaKCJUyqkrNBk2
+ POST {{endpoint}}/workflows/run
+ Authorization: Bearer {{api-key2}}
+ Content-Type: application/json
+
+ {
+    "inputs": {
+        "query": "日本で一番有名な山は？"
+    },
+    "user": "{{user}}"
+ }
