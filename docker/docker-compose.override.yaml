@@ -4,16 +4,16 @@ services:
 #      - ../api:/app/api
       - ../api/core/tools/provider/builtin:/app/api/core/tools/provider/builtin
       - ./volumes/app/storage:/app/api/storage
-#    environment:
-#      FLASK_DEBUG: 'true'
-#      DEBUG: 'true'
-
+    environment:
+      DEPLOY_ENV: TESTING
+      FLASK_DEBUG: 'true'
+      DEBUG: 'true'
+      LOG_LEVEL: DEBUG
+      MIGRATION_ENABLED: false
 #  api:
 #    image: dify-api:latest 
-#
 #  worker:
 #    image: dify-api:latest
-
   db:
     ports:
       - '${DB_PORT:-5432}:${DB_PORT:-5432}'
