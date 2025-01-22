@@ -19,9 +19,9 @@ parameters:
       en_US: Audio File
       ja_JP: 音声ファイル
     human_description:
-      en_US: The audio file to be transcribed.
+      en_US: The audio file to be transcribed
       ja_JP: 文字起こし対象の音声ファイル
-    llm_description: The audio file to be transcribed.
+    llm_description: The audio file to be transcribed
     form: llm
 
   - name: language
@@ -31,7 +31,7 @@ parameters:
       en_US: Language
       ja_JP: 言語
     human_description:
-      en_US: Language of the audio file.
+      en_US: Language of the audio file
       ja_JP: 音声ファイルの言語
     options:
       - value: en
@@ -70,24 +70,24 @@ parameters:
     required: false
     label:
       en_US: Response Format
-      ja_JP: レスポース形式
+      ja_JP: レスポンス形式
     human_description:
-      en_US: Format of the response.
+      en_US: Format of the response
       ja_JP: レスポンスの形式
     options:
       - value: text
         label:
-          en_US: Text
-          ja_JP: テキスト
+          en_US: text
+          ja_JP: text
       - value: json
         label:
-          en_US: JSON
-          ja_JP: JSON
+          en_US: json
+          ja_JP: json
       - value: verbose_json
         label:
-          en_US: Verbose JSON
-          ja_JP: 詳細JSON
-    default: verbose_json
+          en_US: verbose_json
+          ja_JP: verbose_json
+    default: text
     form: form
 
   - name: model
@@ -99,7 +99,7 @@ parameters:
     human_description:
       en_US: Model to use
       ja_JP: 使用するモデル
-    default: Systran/faster-distil-whisper-large-v3
+    default: Systran/faster-whisper-large-v3
     form: form
 
   - name: endpoint
