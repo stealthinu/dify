@@ -1,0 +1,39 @@
+@endpoint=http://localhost/v1
+@api-key=app-Rk9NB5V3zHpUFF8O4jQ1deQA
+@user=stealth
+@file=emotion003.wav
+@file_id=23a39aad-7c47-4e9a-af6d-cc5e3c81c49d
+
+
+### ファイルアップロードする
+POST {{endpoint}}/files/upload
+Authorization: Bearer {{api-key}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="{{file}}"
+Content-Type: audio/wav
+
+< ./{{file}}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="user"
+
+{{user}}
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Faster Whisper文字起こしテスト
+POST {{endpoint}}/workflows/run
+Authorization: Bearer {{api-key}}
+Content-Type: application/json
+
+{
+    "inputs": {
+        "audio_file": {
+            "type": "audio",
+            "transfer_method": "local_file",
+            "upload_file_id": "{{file_id}}"
+        }
+    },
+    "user": "{{user}}"
+}
+
