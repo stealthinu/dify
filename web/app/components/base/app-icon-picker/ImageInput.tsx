@@ -2,8 +2,7 @@
 
 import type { ChangeEvent, FC } from 'react'
 import { createRef, useEffect, useState } from 'react'
-import type { Area } from 'react-easy-crop'
-import Cropper from 'react-easy-crop'
+import Cropper, { type Area, type CropperProps } from 'react-easy-crop'
 import classNames from 'classnames'
 
 import { ImagePlus } from '../icons/src/vender/line/images'
@@ -18,11 +17,13 @@ export type OnImageInput = {
 
 type UploaderProps = {
   className?: string
+  cropShape?: CropperProps['cropShape']
   onImageInput?: OnImageInput
 }
 
 const ImageInput: FC<UploaderProps> = ({
   className,
+  cropShape,
   onImageInput,
 }) => {
   const [inputImage, setInputImage] = useState<{ file: File; url: string }>()
@@ -78,6 +79,7 @@ const ImageInput: FC<UploaderProps> = ({
         crop={crop}
         zoom={zoom}
         aspect={1}
+        cropShape={cropShape}
         onCropChange={setCrop}
         onCropComplete={onCropComplete}
         onZoomChange={setZoom}
@@ -99,8 +101,8 @@ const ImageInput: FC<UploaderProps> = ({
         {
           !inputImage
             ? <>
-              <ImagePlus className="w-[30px] h-[30px] mb-3 pointer-events-none" />
-              <div className="text-sm font-medium mb-[2px]">
+              <ImagePlus className="pointer-events-none mb-3 h-[30px] w-[30px]" />
+              <div className="mb-[2px] text-sm font-medium">
                 <span className="pointer-events-none">Drop your image here, or&nbsp;</span>
                 <button className="text-components-button-primary-bg" onClick={() => inputRef.current?.click()}>browse</button>
                 <input
@@ -110,7 +112,7 @@ const ImageInput: FC<UploaderProps> = ({
                   onChange={handleLocalFileInput}
                 />
               </div>
-              <div className="text-xs pointer-events-none">Supports PNG, JPG, JPEG, WEBP and GIF</div>
+              <div className="pointer-events-none text-xs">Supports PNG, JPG, JPEG, WEBP and GIF</div>
             </>
             : handleShowImage()
         }
