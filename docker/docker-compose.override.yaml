@@ -1,0 +1,22 @@
+services:
+  api:
+    volumes:
+      - ./apikey.py:/app/api/controllers/console/apikey.py
+      - ./volumes/app/storage:/app/api/storage
+
+  pgadmin4:
+    image: dpage/pgadmin4:8.4
+    ports:
+      - 8080:80
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+      - ./temp/servers.json:/pgadmin4/servers.json
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@example.com
+      PGADMIN_DEFAULT_PASSWORD: testpw1
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    depends_on:
+      - db
+
+volumes:
+  pgadmin-data:
